@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import {Button, TextInput, View} from 'react-native';
+import {useState} from 'react';
+import {TouchableOpacity, TextInput, Text, View} from 'react-native';
 export const MappInputText = ({
   textValue,
   hintValue,
@@ -20,21 +20,32 @@ export const MappInputText = ({
       }}>
       <TextInput
         style={{flex: 1}}
-        onChangeText={(value) => {
+        onChangeText={value => {
           setInputValue(value);
           onValueChanged?.invoke(value);
         }}
         placeholder={hintValue}
         value={inputValue}
       />
-      <View style={{margin: 5}}>
-        <Button
-          title={buttonTitle}
+      <View style={{margin: 0}}>
+        <TouchableOpacity
+          disabled={inputValue == undefined || inputValue == ''}
+          style={{
+            margin: 5,
+            padding: 10,
+            borderRadius: 100,
+            justifyContent: 'space-around',
+            backgroundColor:
+              inputValue == undefined || inputValue == ''
+                ? '#cccccc'
+                : '#64B4FF',
+          }}
           onPress={() => {
             onClick(inputValue);
-            setInputValue("")
-          }}
-        />
+            setInputValue('');
+          }}>
+          <Text>{buttonTitle}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

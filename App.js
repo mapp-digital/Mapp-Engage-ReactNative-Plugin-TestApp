@@ -18,16 +18,18 @@ import {
   useColorScheme,
   View,
   Alert,
-  Platform
+  Platform,
 } from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import { MappSwitch, MappInputText,MappButton } from './components/MappComponents';
+import {
+  MappSwitch,
+  MappInputText,
+  MappButton,
+} from './components/MappComponents';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -126,6 +128,7 @@ const App: () => Node = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={styles.sectionContainer}>
+        <MappButton buttonTitle={'Logout'} buttonOnPress={logOut} />
         <View
           style={{
             marginBottom: 20,
@@ -146,6 +149,15 @@ const App: () => Node = () => {
             setAlias(value);
           }}
         />
+        <MappInputText
+          hintValue={'Set token'}
+          buttonTitle={'Set'}
+          onClick={value => {
+            console.log('New token: ', value);
+            setToken(value);
+          }}
+        />
+        <View style={{marginBottom: 15}}/>
         <MappButton buttonTitle={'Get Alias'} buttonOnPress={getAlias} />
         <MappButton buttonTitle={'Get Token'} buttonOnPress={getToken} />
         <MappButton
@@ -166,7 +178,7 @@ const App: () => Node = () => {
         />
         <View
           style={{
-            marginBottom: 20,
+            marginVertical: 10,
             borderWidth: 1,
             borderColor: '#ff7a33',
             padding: 5,
@@ -183,8 +195,23 @@ const App: () => Node = () => {
           />
         </View>
 
-        <MappButton buttonTitle={'Set push: enabled'} buttonOnPress={optIn} />
-        <MappButton buttonTitle={'Set push: disabled'} buttonOnPress={optOut} />
+        <MappButton buttonTitle={'Open InApp'} buttonOnPress={appOpenEvent} />
+        <MappButton
+          buttonTitle={'App Feedback'}
+          buttonOnPress={appFeedbackEvent}
+        />
+        <MappButton
+          buttonTitle={'App Discount'}
+          buttonOnPress={appDiscountEvent}
+        />
+        <MappButton buttonTitle={'App Promo'} buttonOnPress={appPromoEvent} />
+        <MappButton
+          buttonTitle={'Request Geofence permission'}
+          buttonOnPress={requestGeofencePermissions}
+        />
+        <MappButton buttonTitle={'Start Geofencing'} buttonOnPress={startGeo} />
+        <MappButton buttonTitle={'Stop Geofencing'} buttonOnPress={stopGeo} />
+        <MappButton buttonTitle={'Get Tags'} buttonOnPress={getTags} />
         <MappButton buttonTitle={'Get Platform'} buttonOnPress={getPlatform} />
       </ScrollView>
     </SafeAreaView>
@@ -208,7 +235,7 @@ const onInitCompletedListener = async () => {
   }
 };
 
-const copyToClipboard = async (data) => {
+const copyToClipboard = async data => {
   Clipboard.setString(data);
   //Toast.show('Copied to Clipboard!');
 };
@@ -223,6 +250,11 @@ const getToken = async () => {
   console.log('Firebase Client Token', token);
   showDialog('Firebase Client Token', token);
   copyToClipboard(token);
+};
+
+const setToken = async token => {
+  let result = await Mapp.setToken(token);
+  console.log(result ? 'Token set successfully' : 'Error setting token');
 };
 
 const getDeviceInfo = async () => {
@@ -246,7 +278,7 @@ const requestPostNotificationPermission = async () => {
   }
 };
 
-const setAlias = async (alias) => {
+const setAlias = async alias => {
   Mapp.setAlias(alias);
 };
 
@@ -263,10 +295,18 @@ const optOut = async () => {
   await Mapp.setPushEnabled(false);
 };
 
-const requestGeofencePermissions = () => {
-  Mapp.requestGeofenceLocationPermissions()
-    .then(result => {})
-    .catch(error => {});
+const requestGeofencePermissions = async () => {
+  if (Platform.OS == 'android') {
+    try {
+      let result = await Mapp.requestGeofenceLocationPermission();
+      showDialog(
+        'Geofence permission success',
+        result == true ? 'TRUE' : 'FALSE',
+      );
+    } catch (e) {
+      showDialog('Geofence permission error', e.message);
+    }
+  }
 };
 
 const startGeo = () => {
@@ -333,7 +373,7 @@ const fetchMultipleMessages = () => {
 
 const getTags = () => {
   Mapp.getTags().then(data => {
-    Alert.alert(JSON.stringify(data));
+    showDialog('TAGS', JSON.stringify(data));
   });
 };
 

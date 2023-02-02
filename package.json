@@ -14,7 +14,7 @@
     "jest-message-util": "^29.4.1",
     "react": "18.1.0",
     "react-native": "0.70.5",
-    "react-native-mapp-plugin": "^1.0.11-beta15",
+    "react-native-mapp-plugin": "^1.0.11-beta16",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
