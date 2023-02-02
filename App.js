@@ -21,6 +21,8 @@ import {
   Platform
 } from 'react-native';
 
+import Clipboard from '@react-native-clipboard/clipboard';
+
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
@@ -206,9 +208,9 @@ const onInitCompletedListener = async () => {
   }
 };
 
-const copyToClipboard = () => {
-  Clipboard.setString(this.state.firebaseToken);
-  Toast.show('Token is copied to Clipboard!');
+const copyToClipboard = async (data) => {
+  Clipboard.setString(data);
+  //Toast.show('Copied to Clipboard!');
 };
 
 const getAlias = async () => {
@@ -220,6 +222,7 @@ const getToken = async () => {
   const token = await Mapp.getToken();
   console.log('Firebase Client Token', token);
   showDialog('Firebase Client Token', token);
+  copyToClipboard(token);
 };
 
 const getDeviceInfo = async () => {

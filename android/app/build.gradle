@@ -80,6 +80,14 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
+    bundleAssetName: "index.android.bundle",
+    // whether to bundle JS and assets in debug mode
+    bundleInDebug: true,
+
+    // whether to bundle JS and assets in release mode
+    bundleInRelease: true,
+    jsBundleDirDebug: "$buildDir/intermediates/assets/debug",
+    jsBundleDirRelease: "$buildDir/intermediates/assets/release",
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
