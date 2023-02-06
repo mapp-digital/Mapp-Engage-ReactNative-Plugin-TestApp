@@ -135,7 +135,6 @@ export const HomeScreen = ({navigation}) => {
             isEnabled={false}
           />
         </View>
-
         <MappButton buttonTitle={'Open InApp'} buttonOnPress={appOpenEvent} />
         <MappButton
           buttonTitle={'App Feedback'}
@@ -150,6 +149,12 @@ export const HomeScreen = ({navigation}) => {
           buttonTitle={'Fetch Inbox messages'}
           buttonOnPress={() => {
             fetchInboxMessage(navigation);
+          }}
+        />
+        <MappButton
+          buttonTitle={'Fetch Latest Inbox messages'}
+          buttonOnPress={() => {
+            fetchLatestInboxMessage(navigation);
           }}
         />
         <MappButton
@@ -375,7 +380,14 @@ const addPushListener = () => {
 
 const fetchInboxMessage = async navigation => {
   const inbox = await Mapp.fetchInboxMessage();
-  navigation.navigate('InAppInbox', (params = inbox));
+  navigation.navigate('InAppInbox', {title:"All Inbox messages",messages: inbox});
+};
+
+const fetchLatestInboxMessage = async navigation => {
+  const latestMessage = await Mapp.fetchLatestInboxMessage();
+  if (latestMessage != null) {
+    navigation.navigate('InAppInbox', {title:"Latest Inbox message", messages: Array.of(latestMessage)});
+  }
 };
 
 const logOut = () => {

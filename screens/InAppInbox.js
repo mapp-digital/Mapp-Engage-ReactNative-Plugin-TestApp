@@ -1,9 +1,11 @@
+import {useEffect} from 'react';
 import {View, Text, FlatList, Alert} from 'react-native';
 import {Message} from '../components/Message';
-import {Dialog} from '../util/dialog';
+
 export const InAppInboxScreen = ({route, navigation}) => {
-  const params = route.params;
-  console.log('PARAMS', params);
+  const params = route.params.messages;
+  const title = route.params.title;
+  console.log('PARAMS', params, 'Title', title);
   const json = JSON.stringify(params);
   const messages = JSON.parse(json);
   const sortedMessages = messages.sort((a, b) => b.templateId - a.templateId);
@@ -11,6 +13,10 @@ export const InAppInboxScreen = ({route, navigation}) => {
     'templatesIds:',
     sortedMessages.map(it => it.templateId).toString(),
   );
+
+  useEffect(() => {
+    navigation.setOptions({title: route.params.title});
+  }, []);
   return (
     <View>
       <FlatList

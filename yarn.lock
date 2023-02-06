@@ -5544,6 +5544,10 @@ react-native-gradle-plugin@^0.71.14:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.14.tgz#cc399662f04fbfcc0e352d03eae1d3efbd5f635a"
   integrity sha512-nnLawTZEPPRAKq92UqDkzoGgCBl9aa9zAihFHMwmwzn4WRVdK4O6Cd4XYiyoNOiQzx3Hh9k5WOckHE80C92ivQ==
 
+react-native-mapp-plugin@/Users/semsudin.tafilovic/StudioProjects/React-native-plugin/react-native-mapp-plugin-1.1.0-beta01.tgz:
+  version "1.1.0-beta01"
+  resolved "/Users/semsudin.tafilovic/StudioProjects/React-native-plugin/react-native-mapp-plugin-1.1.0-beta01.tgz#8e2c67be4c913777f116f6dbcde266083fb56fc7"
+
 react-native-mapp-plugin@^1.0.11-beta16:
   version "1.0.11-beta16"
   resolved "https://registry.npmjs.org/react-native-mapp-plugin/-/react-native-mapp-plugin-1.0.11-beta16.tgz"
