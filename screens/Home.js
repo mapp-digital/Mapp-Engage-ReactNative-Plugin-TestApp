@@ -1,6 +1,6 @@
 import React, {useEffect, useCallback, useState} from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
-//mport FBMessaging, {firebase} from '@react-native-firebase/messaging';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -21,9 +21,12 @@ import {
   MappSwitch,
   MappInputText,
   MappButton,
-} from './components/MappComponents';  
+} from '../components/MappComponents';
+import {InAppInboxScreen} from './InAppInbox';
 
-const [isInitialized, setIsInitialized] = useState(false);
+export const HomeScreen = ({navigation}) => {
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const [isReady, setIsReady] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isPushEnabled, setIsPushEnabled] = useState(false);
@@ -33,7 +36,6 @@ const [isInitialized, setIsInitialized] = useState(false);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
 
   useEffect(() => {
     const onInitListener = async () => {
@@ -57,23 +59,6 @@ const [isInitialized, setIsInitialized] = useState(false);
     // request permission to post notification for Android 13+
     requestPostNotificationPermission();
   }, []);
-
-  // useEffect(() => {
-  //   const unsubscribe = FBMessaging().onMessage(async remoteMessage => {
-  //     Mapp.setRemoteMessage(remoteMessage);
-  //     Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-  //   });
-
-  //   FBMessaging()
-  //     .registerDeviceForRemoteMessages()
-  //     .then(() => {
-  //       FBMessaging().getToken(async token => {
-  //         Mapp.setToken(token);
-  //       });
-  //     });
-
-  //   return unsubscribe;
-  // }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -161,7 +146,12 @@ const [isInitialized, setIsInitialized] = useState(false);
           buttonOnPress={appDiscountEvent}
         />
         <MappButton buttonTitle={'App Promo'} buttonOnPress={appPromoEvent} />
-        <MappButton buttonTitle={'Fetch Inbox messages'} buttonOnPress={fetchInboxMessage} />
+        <MappButton
+          buttonTitle={'Fetch Inbox messages'}
+          buttonOnPress={() => {
+            fetchInboxMessage(navigation);
+          }}
+        />
         <MappButton
           buttonTitle={'Request Geofence permission'}
           buttonOnPress={requestGeofencePermissions}
@@ -383,9 +373,10 @@ const addPushListener = () => {
   });
 };
 
-const fetchInboxMessage = async () => {
-  const inbox=await  Mapp.fetchInboxMessage();
-}
+const fetchInboxMessage = async navigation => {
+  const inbox = await Mapp.fetchInboxMessage();
+  navigation.navigate('InAppInbox', (params = inbox));
+};
 
 const logOut = () => {
   Mapp.logOut(true);
