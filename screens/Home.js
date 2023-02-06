@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useEffect, useCallback, useState} from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
 //mport FBMessaging, {firebase} from '@react-native-firebase/messaging';
@@ -29,47 +21,9 @@ import {
   MappSwitch,
   MappInputText,
   MappButton,
-} from './components/MappComponents';
+} from './components/MappComponents';  
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-
-  Mapp.engage(
-    '183408d0cd3632.83592719',
-    '785651527831',
-    'L3',
-    '206974',
-    '5963',
-  );
-  
-  const [isInitialized, setIsInitialized] = useState(false);
+const [isInitialized, setIsInitialized] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isPushEnabled, setIsPushEnabled] = useState(false);
@@ -460,5 +414,3 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-
-export default App;
