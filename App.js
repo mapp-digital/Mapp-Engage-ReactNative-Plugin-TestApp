@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
 //mport FBMessaging, {firebase} from '@react-native-firebase/messaging';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {StyleSheet, Text, useColorScheme, View, Alert} from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { HomeScreen } from './screens/Home';
-import { InAppInboxScreen } from './screens/InAppInbox';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {HomeScreen} from './screens/Home';
+import {InAppInboxScreen} from './screens/InAppInbox';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -20,6 +20,7 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  addPushListener();
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -29,6 +30,14 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
+};
+
+const addPushListener = () => {
+  console.log('REGISTERED: addPushListener');
+  Mapp.addPushListener(notification => {
+    console.log(JSON.stringify(notification));
+    Alert.alert('Notification message event', JSON.stringify(notification));
+  });
 };
 
 const styles = StyleSheet.create({

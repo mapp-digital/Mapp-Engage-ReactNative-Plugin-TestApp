@@ -57,7 +57,7 @@ export const HomeScreen = ({navigation}) => {
 
     //this.setState({isInitialised: initialized});
     // request permission to post notification for Android 13+
-    requestPostNotificationPermission();
+    // requestPostNotificationPermission();
   }, []);
 
   return (
@@ -368,13 +368,6 @@ const addDeeplink = () => {
       myLink: link,
       message_id: message_id,
     });
-  });
-};
-
-const addPushListener = () => {
-  Mapp.addPushListener(notification => {
-    console.log(JSON.stringify(notification));
-    Alert.alert(JSON.stringify(notification));
   });
 };
 
