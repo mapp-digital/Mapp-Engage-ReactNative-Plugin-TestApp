@@ -36,7 +36,7 @@ const addPushListener = () => {
   console.log('REGISTERED: addPushListener');
   Mapp.addPushListener(notification => {
     console.log(JSON.stringify(notification));
-    Alert.alert('Notification message event', JSON.stringify(notification));
+    Alert.alert('Push message event', JSON.stringify(notification));
   });
 };
 
