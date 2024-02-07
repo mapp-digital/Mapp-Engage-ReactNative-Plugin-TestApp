@@ -20,7 +20,6 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  addPushListener();
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -32,13 +31,24 @@ const App = () => {
   );
 };
 
-const addPushListener = () => {
-  console.log('REGISTERED: addPushListener');
-  Mapp.addPushListener(notification => {
-    console.log(JSON.stringify(notification));
+Mapp.addPushListener(notification => {
+  let json = JSON.stringify(notification);
+  let event = json['pushNotificationEventType'];
+  console.log(json);
+  console.log(event);
+  if (event == 'onPushOpened') {
     Alert.alert('Push message event', JSON.stringify(notification));
-  });
-};
+  } else if (event == 'onPushReceived') {
+  }
+});
+
+Mapp.addDeepLinkingListener(notification => {
+  let json = JSON.stringify(notification);
+  let event = json['pushNotificationEventType'];
+  console.log(json);
+  console.log(event);
+  Alert.alert('Push message event', json);
+});
 
 const styles = StyleSheet.create({
   sectionContainer: {
