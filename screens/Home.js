@@ -38,27 +38,27 @@ export const HomeScreen = ({navigation}) => {
   };
 
   useEffect(() => {
-    const onInitListener = async () => {
-      const initialized = await onInitCompletedListener();
-      if (initialized) {
-        const ready = await Mapp.isReady();
-        setIsReady(ready);
-
-        const registered = await Mapp.isDeviceRegistered();
-        setIsRegistered(registered);
-
-        const pushEnabled = await Mapp.isPushEnabled();
-        setIsPushEnabled(pushEnabled);
-      }
-      setIsInitialized(initialized);
-      console.log('Is initialized from useEffect:', initialized);
-    };
-    onInitListener();
-
     //this.setState({isInitialised: initialized});
     // request permission to post notification for Android 13+
-    // requestPostNotificationPermission();
+    //requestPostNotificationPermission();
   }, []);
+
+  const onInitListener = async () => {
+    const initialized = await onInitCompletedListener();
+    if (initialized) {
+      const ready = await Mapp.isReady();
+      setIsReady(ready);
+
+      const registered = await Mapp.isDeviceRegistered();
+      setIsRegistered(registered);
+
+      const pushEnabled = await Mapp.isPushEnabled();
+      setIsPushEnabled(pushEnabled);
+    }
+    setIsInitialized(initialized);
+    console.log('Is initialized from useEffect:', initialized);
+  };
+  onInitListener();
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -225,8 +225,10 @@ const requestPostNotificationPermission = async () => {
   let result = await Mapp.requestPostNotificationPermission();
   if (result == true) {
     console.log('PERMISSION GRANTED');
+    Alert.alert('POST NOTIFICATION', 'Permission was granted!');
   } else {
     console.log('PERMISSION NOT GRANTED');
+    Alert.alert('POST NOTIFICATION', 'Permission was not granted!');
   }
 };
 
@@ -373,13 +375,19 @@ const addDeeplink = () => {
 
 const fetchInboxMessage = async navigation => {
   const inbox = await Mapp.fetchInboxMessage();
-  navigation.navigate('InAppInbox', {title:"All Inbox messages",messages: inbox});
+  navigation.navigate('InAppInbox', {
+    title: 'All Inbox messages',
+    messages: inbox,
+  });
 };
 
 const fetchLatestInboxMessage = async navigation => {
   const latestMessage = await Mapp.fetchLatestInboxMessage();
   if (latestMessage != null) {
-    navigation.navigate('InAppInbox', {title:"Latest Inbox message", messages: Array.of(latestMessage)});
+    navigation.navigate('InAppInbox', {
+      title: 'Latest Inbox message',
+      messages: Array.of(latestMessage),
+    });
   }
 };
 
