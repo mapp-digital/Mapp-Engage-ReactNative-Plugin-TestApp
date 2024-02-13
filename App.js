@@ -1,7 +1,15 @@
 import * as React from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
 //mport FBMessaging, {firebase} from '@react-native-firebase/messaging';
-import {StyleSheet, Text, useColorScheme, View, Alert} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  Alert,
+  Platform,
+  ToastAndroid,
+} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {HomeScreen} from './screens/Home';
@@ -20,6 +28,33 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // Mapp.addPushListener(notification => {
+  //   let json = JSON.stringify(notification);
+  //   let event = notification['pushNotificationEventType'];
+  //   console.log('PUSH JSON: ', json);
+  //   console.log('EVENT: ', event);
+  // });
+
+  Mapp.addDeepLinkingListener(notification => {
+    let json = JSON.stringify(notification);
+    let event = notification['pushNotificationEventType'];
+    console.log('DEEP LINK JSON: ', json);
+    console.log('EVENT: ', event);
+    setTimeout(() => {
+      Alert.alert('Push message event', json);
+    }, 500);
+  });
+
+  if (Platform.OS == 'android') {
+    Mapp.requestPostNotificationPermission(result => {
+      ToastAndroid.show(
+        'POST NOTIFICATIONS PERMISSION: ' +
+          (result ? 'GRANTED' : 'NOT GRANTED'),
+        ToastAndroid.SHORT,
+      );
+    });
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -30,25 +65,6 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
-Mapp.addPushListener(notification => {
-  let json = JSON.stringify(notification);
-  let event = json['pushNotificationEventType'];
-  console.log(json);
-  console.log(event);
-  if (event == 'onPushOpened') {
-    Alert.alert('Push message event', JSON.stringify(notification));
-  } else if (event == 'onPushReceived') {
-  }
-});
-
-Mapp.addDeepLinkingListener(notification => {
-  let json = JSON.stringify(notification);
-  let event = json['pushNotificationEventType'];
-  console.log(json);
-  console.log(event);
-  Alert.alert('Push message event', json);
-});
 
 const styles = StyleSheet.create({
   sectionContainer: {
