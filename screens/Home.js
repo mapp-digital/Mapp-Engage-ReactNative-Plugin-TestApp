@@ -95,7 +95,7 @@ export const HomeScreen = ({navigation}) => {
           buttonTitle={'Set'}
           onClick={value => {
             console.log('New token: ', value);
-            setToken(value);
+            setToken;
           }}
         />
         <View style={{marginBottom: 15}} />

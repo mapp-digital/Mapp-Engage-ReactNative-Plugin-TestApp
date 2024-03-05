@@ -1,11 +1,8 @@
 import * as React from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
-//mport FBMessaging, {firebase} from '@react-native-firebase/messaging';
 import {
   StyleSheet,
-  Text,
   useColorScheme,
-  View,
   Alert,
   Platform,
   ToastAndroid,
@@ -28,6 +25,7 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // register listener for push actions - received, opened, dismissed...
   // Mapp.addPushListener(notification => {
   //   let json = JSON.stringify(notification);
   //   let event = notification['pushNotificationEventType'];
@@ -35,15 +33,16 @@ const App = () => {
   //   console.log('EVENT: ', event);
   // });
 
-  Mapp.addDeepLinkingListener(notification => {
-    let json = JSON.stringify(notification);
-    let event = notification['pushNotificationEventType'];
-    console.log('DEEP LINK JSON: ', json);
-    console.log('EVENT: ', event);
-    setTimeout(() => {
-      Alert.alert('Push message event', json);
-    }, 500);
-  });
+  // register listener for deeplink push messages
+  // Mapp.addDeepLinkingListener(notification => {
+  //   let json = JSON.stringify(notification);
+  //   let event = notification['pushNotificationEventType'];
+  //   console.log('DEEP LINK JSON: ', json);
+  //   console.log('EVENT: ', event);
+  //   setTimeout(() => {
+  //     Alert.alert('Push message event', json);
+  //   }, 500);
+  // });
 
   if (Platform.OS == 'android') {
     Mapp.requestPostNotificationPermission(result => {
