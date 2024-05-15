@@ -34,15 +34,15 @@ const App = () => {
   // });
 
   // register listener for deeplink push messages
-  // Mapp.addDeepLinkingListener(notification => {
-  //   let json = JSON.stringify(notification);
-  //   let event = notification['pushNotificationEventType'];
-  //   console.log('DEEP LINK JSON: ', json);
-  //   console.log('EVENT: ', event);
-  //   setTimeout(() => {
-  //     Alert.alert('Push message event', json);
-  //   }, 500);
-  // });
+  Mapp.addDeepLinkingListener(notification => {
+    let json = JSON.stringify(notification);
+    let event = notification['pushNotificationEventType'];
+    console.log('DEEP LINK JSON: ', json);
+    console.log('EVENT: ', event);
+    setTimeout(() => {
+      Alert.alert('Push message event', json);
+    }, 500);
+  });
 
   if (Platform.OS == 'android') {
     Mapp.requestPostNotificationPermission(result => {
