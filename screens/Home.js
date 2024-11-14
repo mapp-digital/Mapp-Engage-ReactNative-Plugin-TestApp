@@ -374,11 +374,25 @@ const addDeeplink = () => {
 };
 
 const fetchInboxMessage = async navigation => {
-  const inbox = await Mapp.fetchInboxMessage();
-  navigation.navigate('InAppInbox', {
-    title: 'All Inbox messages',
-    messages: inbox,
+  Mapp.fetchInboxMessage().then(data => {
+    if (Platform.OS == 'ios') {
+      Mapp.addInboxMessagesListener(messages => {
+        Alert.alert('Inbox message', JSON.stringify(messages));
+        navigation.navigate('InAppInbox', {
+          title: 'All Inbox messages',
+          messages: messages,
+        });
+      });
+    } else {
+      Alert.alert('Inbox message', JSON.stringify(data));
+      navigation.navigate('InAppInbox', {
+        title: 'All Inbox messages',
+        messages: data,
+      });
+    }
   });
+  //const inbox = await Mapp.fetchInboxMessage();
+  
 };
 
 const fetchLatestInboxMessage = async navigation => {
