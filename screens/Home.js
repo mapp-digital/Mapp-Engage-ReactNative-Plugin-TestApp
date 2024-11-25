@@ -41,6 +41,7 @@ export const HomeScreen = ({navigation}) => {
     //this.setState({isInitialised: initialized});
     // request permission to post notification for Android 13+
     //requestPostNotificationPermission();
+    onInitListener();
   }, []);
 
   const onInitListener = async () => {
@@ -58,7 +59,6 @@ export const HomeScreen = ({navigation}) => {
     setIsInitialized(initialized);
     console.log('Is initialized from useEffect:', initialized);
   };
-  onInitListener();
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -377,22 +377,18 @@ const fetchInboxMessage = async navigation => {
   Mapp.fetchInboxMessage().then(data => {
     if (Platform.OS == 'ios') {
       Mapp.addInboxMessagesListener(messages => {
-        Alert.alert('Inbox message', JSON.stringify(messages));
         navigation.navigate('InAppInbox', {
           title: 'All Inbox messages',
           messages: messages,
         });
       });
     } else {
-      Alert.alert('Inbox message', JSON.stringify(data));
       navigation.navigate('InAppInbox', {
         title: 'All Inbox messages',
         messages: data,
       });
     }
   });
-  //const inbox = await Mapp.fetchInboxMessage();
-  
 };
 
 const fetchLatestInboxMessage = async navigation => {
