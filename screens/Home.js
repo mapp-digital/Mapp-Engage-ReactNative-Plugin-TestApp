@@ -50,8 +50,8 @@ export const HomeScreen = ({navigation}) => {
       const ready = await Mapp.isReady();
       setIsReady(ready);
 
-      const registered = await Mapp.isDeviceRegistered();
-      setIsRegistered(registered);
+      const alias = await Mapp.getAlias();
+      setIsRegistered(alias !== null);
 
       const pushEnabled = await Mapp.isPushEnabled();
       setIsPushEnabled(pushEnabled);
