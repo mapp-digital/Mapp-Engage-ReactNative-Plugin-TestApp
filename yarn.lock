@@ -5128,9 +5128,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-mapp-plugin@/Users/semsudin.tafilovic/VisualCodeProjects/React-native-plugin/react-native-mapp-plugin-1.2.0.tgz:
+react-native-mapp-plugin@^1.2.0:
   version "1.2.0"
-  resolved "/Users/semsudin.tafilovic/VisualCodeProjects/React-native-plugin/react-native-mapp-plugin-1.2.0.tgz#d808a44a42c717dec3feb126b153caf3a603e7ab"
+  resolved "https://registry.yarnpkg.com/react-native-mapp-plugin/-/react-native-mapp-plugin-1.2.0.tgz#d808a44a42c717dec3feb126b153caf3a603e7ab"
+  integrity sha512-qLupiPwwpz9mIcs2AXr6TwbYGC83pZyRhUiKmuVN+23E9R5Q6o2Nr2SgNEEDSw/8lztlsDTFz6MV+/P0ppTtyA==
 
 react-native-safe-area-context@^4.9.0:
   version "4.14.0"
