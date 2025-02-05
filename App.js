@@ -18,6 +18,7 @@ const Stack = createNativeStackNavigator();
 
 Mapp.engage('183408d0cd3632.83592719', '', 'L3', '206974', '5963');
 //Mapp.engage('1929048fafa670.91503749', '', 'L3', '207182', '5963');
+Mapp.setShowNotificationsAtForeground(true);
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
