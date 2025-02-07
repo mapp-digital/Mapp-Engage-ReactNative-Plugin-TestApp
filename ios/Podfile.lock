@@ -72,7 +72,7 @@ PODS:
     - hermes-engine/Pre-built (= 0.73.11)
   - hermes-engine/Pre-built (0.73.11)
   - libevent (2.1.12)
-  - MappSDK (6.0.9)
+  - MappSDK (6.0.10)
   - MappSDKGeotargeting (6.0.5):
     - MappSDK (~> 6.0.0)
   - MappSDKInapp (6.0.6.10)
@@ -1355,7 +1355,7 @@ SPEC CHECKSUMS:
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: d992945b77c506e5164e6a9a77510c9d57472c59
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  MappSDK: b06b5d5225390019f74922948e878321f8d3cc7d
+  MappSDK: eb0946285ad4c1af366b483f7a5a11e52fb51448
   MappSDKGeotargeting: 7c42a2f919cea81357f6d11ec5a6bf727d0c7770
   MappSDKInapp: 22f4fc98c3c95824e77e1b6e15a67723e687038e
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
