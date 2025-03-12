@@ -165,6 +165,8 @@ export const HomeScreen = ({navigation}) => {
         <MappButton buttonTitle={'Stop Geofencing'} buttonOnPress={stopGeo} />
         <MappButton buttonTitle={'Get Tags'} buttonOnPress={getTags} />
         <MappButton buttonTitle={'Get Platform'} buttonOnPress={getPlatform} />
+        <MappButton buttonTitle={'Set Custom String'} buttonOnPress={setString} />
+        <MappButton buttonTitle={'Get Custom String'} buttonOnPress={getString} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -176,6 +178,16 @@ const showDialog = (title, message) => {
 
 const getPlatform = () => {
   showDialog('Platform', Platform.OS);
+};
+
+const setString = () => {
+  Mapp.setAttributeString('language', 'it');
+};
+
+const getString = () => {
+  let stringValue = Mapp.getAttributeStringValue("lan");
+  console.log(stringValue);
+  //showDialog('Platform', stringValue);
 };
 
 const onInitCompletedListener = async () => {
