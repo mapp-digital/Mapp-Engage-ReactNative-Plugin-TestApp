@@ -4,10 +4,9 @@ export const MappInputText = ({
   textValue,
   hintValue,
   buttonTitle,
-  onValueChanged,
+  onValueChanged = text => {},
   onClick,
 }) => {
-  const [inputValue, setInputValue] = useState(textValue);
   return (
     <View
       style={{
@@ -21,31 +20,33 @@ export const MappInputText = ({
       <TextInput
         style={{flex: 1}}
         onChangeText={value => {
-          setInputValue(value);
-          onValueChanged?.invoke(value);
+          //setInputValue(value);
+          onValueChanged(value);
         }}
         placeholder={hintValue}
-        value={inputValue}
+        value={textValue}
       />
       <View style={{margin: 0}}>
-        <TouchableOpacity
-          disabled={inputValue == undefined || inputValue == ''}
-          style={{
-            margin: 5,
-            padding: 10,
-            borderRadius: 100,
-            justifyContent: 'space-around',
-            backgroundColor:
-              inputValue == undefined || inputValue == ''
-                ? '#cccccc'
-                : '#64B4FF',
-          }}
-          onPress={() => {
-            onClick(inputValue);
-            setInputValue('');
-          }}>
-          <Text>{buttonTitle}</Text>
-        </TouchableOpacity>
+        {buttonTitle != null ? (
+          <TouchableOpacity
+            disabled={textValue == undefined || textValue == ''}
+            style={{
+              margin: 5,
+              padding: 10,
+              borderRadius: 100,
+              justifyContent: 'space-around',
+              backgroundColor:
+                textValue == undefined || textValue == ''
+                  ? '#cccccc'
+                  : '#64B4FF',
+            }}
+            onPress={() => {
+              onClick(textValue);
+              //setInputValue('');
+            }}>
+            <Text>{buttonTitle}</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );

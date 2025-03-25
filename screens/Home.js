@@ -6,7 +6,6 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
   Alert,
@@ -30,6 +29,8 @@ export const HomeScreen = ({navigation}) => {
   const [isReady, setIsReady] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [isPushEnabled, setIsPushEnabled] = useState(false);
+  const [aliasState, setAliasState] = useState('');
+  const [tokenState, setTokenState] = useState('');
 
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -83,19 +84,25 @@ export const HomeScreen = ({navigation}) => {
           <MappSwitch text={'Registered'} isChecked={isRegistered} />
         </View>
         <MappInputText
+          onValueChanged={value => setAliasState(value)}
+          textValue={aliasState}
           hintValue={'Enter custom alias'}
           buttonTitle={'Set'}
           onClick={value => {
             console.log('New alias: ', value);
             setAlias(value);
+            setAliasState('');
           }}
         />
         <MappInputText
+          onValueChanged={value => setTokenState(value)}
+          textValue={tokenState}
           hintValue={'Set token'}
           buttonTitle={'Set'}
           onClick={value => {
             console.log('New token: ', value);
-            setToken;
+            setToken(value);
+            setTokenState('');
           }}
         />
         <View style={{marginBottom: 15}} />
@@ -146,6 +153,13 @@ export const HomeScreen = ({navigation}) => {
         />
         <MappButton buttonTitle={'App Promo'} buttonOnPress={appPromoEvent} />
         <MappButton
+          buttonTitle="Custom Attributes"
+          buttonOnPress={() => {
+            navigation.navigate('CustomAttributes', {
+              title: 'Custom Attributes',
+            });
+          }}></MappButton>
+        <MappButton
           buttonTitle={'Fetch Inbox messages'}
           buttonOnPress={() => {
             fetchInboxMessage(navigation);
@@ -165,8 +179,6 @@ export const HomeScreen = ({navigation}) => {
         <MappButton buttonTitle={'Stop Geofencing'} buttonOnPress={stopGeo} />
         <MappButton buttonTitle={'Get Tags'} buttonOnPress={getTags} />
         <MappButton buttonTitle={'Get Platform'} buttonOnPress={getPlatform} />
-        <MappButton buttonTitle={'Set Custom String'} buttonOnPress={setString} />
-        <MappButton buttonTitle={'Get Custom String'} buttonOnPress={getString} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -178,16 +190,6 @@ const showDialog = (title, message) => {
 
 const getPlatform = () => {
   showDialog('Platform', Platform.OS);
-};
-
-const setString = () => {
-  Mapp.setAttributeString('language', 'it');
-};
-
-const getString = () => {
-  let stringValue = Mapp.getAttributeStringValue("lan");
-  console.log(stringValue);
-  //showDialog('Platform', stringValue);
 };
 
 const onInitCompletedListener = async () => {
