@@ -1,6 +1,6 @@
 import {Mapp} from 'react-native-mapp-plugin';
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StyleSheet, Text} from 'react-native';
+import {ScrollView, View, StyleSheet, Text, Alert} from 'react-native';
 import {
   MappInputText,
   MappButton,
@@ -73,9 +73,17 @@ const getCustomAttribute = async key => {
     showDialog('Error', "Attribute key can't be empty!");
     return;
   }
-  let stringValue = await Mapp.getAttributeStringValue(key);
-  console.log(stringValue);
-  showDialog('Custom', stringValue);
+  try {
+    let stringValue = await Mapp.getAttributeStringValue(key);
+    console.log(stringValue);
+    showDialog('Custom', stringValue);
+  } catch (error) {
+    showDialog('Error', error);
+  }
+};
+
+const showDialog = (title, message) => {
+  Alert.alert(title, message);
 };
 
 const styles = StyleSheet.create({
