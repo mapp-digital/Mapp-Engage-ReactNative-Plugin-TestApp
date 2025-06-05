@@ -181,11 +181,11 @@ const getPlatform = () => {
 };
 
 const setString = () => {
-  Mapp.setAttributeString('language', 'it');
+  Mapp.setAttributeString('firstName', 'EUR');
 };
 
-const getString = () => {
-  let stringValue = Mapp.getAttributeStringValue("lan");
+const getString = async () => {
+  let stringValue = await Mapp.getAttributeStringValue("firstName");
   console.log(stringValue);
   //showDialog('Platform', stringValue);
 };
