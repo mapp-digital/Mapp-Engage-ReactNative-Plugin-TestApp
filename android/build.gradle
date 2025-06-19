@@ -9,6 +9,7 @@ buildscript {
     }
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
     }
 
@@ -17,6 +18,14 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
         classpath("com.google.gms:google-services:4.4.2")
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()     // 👈 Critical for consuming local maven artifacts
+        google()
+        mavenCentral()
     }
 }
 

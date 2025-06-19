@@ -13,6 +13,11 @@ npx react-native codegen
 npm install #or yarn install
 ```
 
+### Install react-native-mapp-plugin from GitHub repository (main branch)
+```bash
+npm install git+https://github.com/mapp-digital/Mapp-Engage-ReactNative-Plugin.git
+```
+
 ### Run application
 ```bash
 npx react-native run-android 
