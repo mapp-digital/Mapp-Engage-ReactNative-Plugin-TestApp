@@ -13,6 +13,7 @@ import {HomeScreen} from './screens/Home';
 import {InAppInboxScreen} from './screens/InAppInbox';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {CustomAttributes} from './screens/CustomAttributes';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,33 +63,10 @@ const App = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
 
         <Stack.Screen name="InAppInbox" component={InAppInboxScreen} />
+        <Stack.Screen name="CustomAttributes" component={CustomAttributes} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 10,
-    paddingHorizontal: 10,
-  },
-  sectionButton: {
-    marginVertical: 10,
-    paddingVertical: 10,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginVertical: 20,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
