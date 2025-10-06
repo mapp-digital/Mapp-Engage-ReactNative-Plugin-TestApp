@@ -1,6 +1,9 @@
 import {Mapp} from 'react-native-mapp-plugin';
 import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StyleSheet, Text, Alert} from 'react-native';
+import {ScrollView, View, StyleSheet, Text, Alert,
+  FlatList,
+  TextInput,
+  TouchableOpacity,} from 'react-native';
 import {
   MappInputText,
   MappButton,
@@ -18,14 +21,15 @@ export const CustomAttributes = ({route, navigation}) => {
   }, []);
 
   const data = [
-    { key: 'name', value: 'Stefan' },
-    { key: 'age', value: 30 },
-    { key: 'isDeveloper', value: true },
-    { key: 'language', value: 'Swift' },
+    { key: 'multi_attr_param1', value: 'testParam' },
+    { key: 'multi_attr_param2', value: 4 },
+    { key: 'multi_attr_param3', value: true },
   ];
 
   const onSave = (updated) => {
     console.log('Updated data:', updated);
+    const dict = Object.fromEntries(updated.map(item => [item.key, item.value]));
+    Mapp.setAttributes(dict);
   };
   
   const [items, setItems] = useState(data);
@@ -39,6 +43,11 @@ export const CustomAttributes = ({route, navigation}) => {
   const handleSave = () => {
     console.log('Saved data:', items);
     if (onSave) onSave(items);
+  };
+
+  const handleGet = async () => {
+    let customAttributtes = await Mapp.getAttributes(["multi_attr_param1","multi_attr_param2","multi_attr_param3"]);
+    showDialog('Device info', JSON.stringify(customAttributtes));
   };
 
   const renderItem = ({ item, index }) => (
@@ -84,15 +93,20 @@ export const CustomAttributes = ({route, navigation}) => {
           buttonTitle="Get attribute"
         />
         <View style={styles.container}>
-        <Text style={styles.title}>Edit Values</Text>
+        <Text style={styles.title}>Custom Attributes</Text>
         <FlatList
           data={items}
           keyExtractor={(item) => item.key}
           renderItem={renderItem}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          scrollEnabled={false}
+          ItemSeparatorComponent={() => <View style={styles.separator} 
+          />}
         />
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveText}>Save</Text>
+          <Text style={styles.saveText}>Send Custom Attributes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.saveButton} onPress={handleGet}>
+          <Text style={styles.saveText}>Get Custom Attributes</Text>
         </TouchableOpacity>
       </View>
       </ScrollView>
