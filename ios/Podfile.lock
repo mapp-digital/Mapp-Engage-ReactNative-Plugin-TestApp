@@ -5,9 +5,9 @@ PODS:
   - FBLazyVector (0.79.3)
   - fmt (11.0.2)
   - glog (0.3.5)
-  - MappSDK (6.0.11)
-  - MappSDKGeotargeting (6.0.5):
-    - MappSDK (~> 6.0.0)
+  - MappSDK (6.1.0)
+  - MappSDKGeotargeting (6.0.7):
+    - MappSDK (~> 6.1.0)
   - MappSDKInapp (6.0.6.10)
   - RCT-Folly (2024.11.18.00):
     - boost
@@ -1263,7 +1263,7 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
-  - react-native-safe-area-context (5.5.0):
+  - react-native-safe-area-context (5.6.1):
     - React-Core
   - React-NativeModulesApple (0.79.3):
     - glog
@@ -1560,14 +1560,14 @@ PODS:
     - React-logger (= 0.79.3)
     - React-perflogger (= 0.79.3)
     - React-utils (= 0.79.3)
-  - RNCClipboard (1.16.2):
+  - RNCClipboard (1.16.3):
     - React-Core
-  - RNMappPlugin (1.3.0.5):
-    - MappSDK (~> 6.0.10)
-    - MappSDKGeotargeting
+  - RNMappPlugin (1.4.0):
+    - MappSDK (~> 6.1.0)
+    - MappSDKGeotargeting (~> 6.0.7)
     - MappSDKInapp
     - React
-  - RNScreens (4.11.1):
+  - RNScreens (4.16.0):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2024.11.18.00)
@@ -1830,8 +1830,8 @@ SPEC CHECKSUMS:
   FBLazyVector: a62a7a5760929b6265e27bc01ab7598dde93ebd3
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  MappSDK: 10cfdeadd344f9a4250da291221ea1e46bbcae01
-  MappSDKGeotargeting: 7c42a2f919cea81357f6d11ec5a6bf727d0c7770
+  MappSDK: d0b2e1cfe8689f16601170b370ee21cf7ef60146
+  MappSDKGeotargeting: eb654ed6da1a4238c37473d3da32ff02ca4ad5d9
   MappSDKInapp: 22f4fc98c3c95824e77e1b6e15a67723e687038e
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: c3e3f5b4ea83e7ff3bc86ce09e2a54b7affd687d
@@ -1864,7 +1864,7 @@ SPEC CHECKSUMS:
   React-logger: 44e070aefe084568c02b544b9d7d436703be1a47
   React-Mapbuffer: b25dedf7fe8923898c44b217ee2ef75c837d0e6a
   React-microtasksnativemodule: 062e51da76b37a0ae8c5f347b3e0ca47df0cd8bc
-  react-native-safe-area-context: 5754906243db98dcf24f62bddd5f63acf7b4d508
+  react-native-safe-area-context: aac2745e96999c8633d2f6119e4e39b499c2ac8b
   React-NativeModulesApple: 74b77285d63a946b58f056d6c56f116dc37a674e
   React-oscompat: f26aa2a4adc84c34212ab12c07988fe19e9cf16a
   React-perflogger: fb196ad3fa3263afc55f773a10c2741517a27f7c
@@ -1895,9 +1895,9 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 552391af67c115d8ee20f9359711e7821145cd96
   ReactCodegen: f3afe7af4a07ff499dd9eacaf768cdd9c449e66c
   ReactCommon: 59b447269f9bda388edaeddfc96d8dd808864cc0
-  RNCClipboard: 4411a880506f11fbcbdc03b5093eb8ffb246d900
-  RNMappPlugin: 70ffd6e4a680a4533a39725dedcd7214da39f422
-  RNScreens: 3ac08be24864f52d61c14ce5b42578d2ebfc2a34
+  RNCClipboard: dfeb43751adff21e588657b5b6c888c72f3aa68e
+  RNMappPlugin: 1f21feeefd693c509914a4cdae1fb5bd8d6c0a8e
+  RNScreens: 6c4ff0e1239403c64891b69228b8c75b045c5fa6
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 645152fcc8359c80cdeb9be7a9e0d2e6c01304a4
 

@@ -17,6 +17,41 @@ export const CustomAttributes = ({route, navigation}) => {
     navigation.setOptions({title: title});
   }, []);
 
+  const data = [
+    { key: 'name', value: 'Stefan' },
+    { key: 'age', value: 30 },
+    { key: 'isDeveloper', value: true },
+    { key: 'language', value: 'Swift' },
+  ];
+
+  const onSave = (updated) => {
+    console.log('Updated data:', updated);
+  };
+  
+  const [items, setItems] = useState(data);
+
+  const handleValueChange = (text, index) => {
+    const updated = [...items];
+    updated[index].value = text;
+    setItems(updated);
+  };
+
+  const handleSave = () => {
+    console.log('Saved data:', items);
+    if (onSave) onSave(items);
+  };
+
+  const renderItem = ({ item, index }) => (
+    <View style={styles.row}>
+      <Text style={styles.key}>{item.key}</Text>
+      <TextInput
+        style={styles.input}
+        value={String(item.value ?? '')}
+        onChangeText={(text) => handleValueChange(text, index)}
+      />
+    </View>
+  );
+
   return (
     <View style={{marginHorizontal: 10}}>
       <ScrollView>
@@ -48,6 +83,18 @@ export const CustomAttributes = ({route, navigation}) => {
           }}
           buttonTitle="Get attribute"
         />
+        <View style={styles.container}>
+        <Text style={styles.title}>Edit Values</Text>
+        <FlatList
+          data={items}
+          keyExtractor={(item) => item.key}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+          <Text style={styles.saveText}>Save</Text>
+        </TouchableOpacity>
+      </View>
       </ScrollView>
     </View>
   );
@@ -95,5 +142,50 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 19,
     marginTop: 10,
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  key: {
+    flex: 1,
+    fontWeight: '600',
+    color: '#333',
+  },
+  input: {
+    flex: 2,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    fontSize: 16,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#eee',
+  },
+  saveButton: {
+    marginTop: 20,
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  saveText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
