@@ -48,6 +48,8 @@ export const CustomAttributes = ({route, navigation}) => {
           }}
           buttonTitle="Get attribute"
         />
+        <MappButton buttonTitle="Set attributes" buttonOnPress={()=>{setAttributes()}}/>
+        <MappButton buttonTitle="Get attributes" buttonOnPress={()=>{getAttributes()}}/>
       </ScrollView>
     </View>
   );
@@ -81,6 +83,26 @@ const getCustomAttribute = async key => {
     showDialog('Error', error);
   }
 };
+
+const setAttributes = async () => {
+  const attributes={"num":1, "FirstName":"Peter"};
+  const result=await Mapp.setAttributes(attributes);
+  if(result){
+    showDialog('Success', 'Attributes set successfully');
+  }else{
+    setDialog("Error", "Attributes couldn't be set");
+  }
+}
+
+const getAttributes = async () => {
+  const keys=["num", "FirstName"];
+  const result=await Mapp.getAttributes(keys);
+  if(result!==null){
+    showDialog('Success', result.toString());
+  }else{
+    setDialog("Error", "Can't get attributes");
+  }
+}
 
 const showDialog = (title, message) => {
   Alert.alert(title, message);
