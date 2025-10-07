@@ -22,28 +22,12 @@ export const CustomAttributes = ({ route, navigation }) => {
     { key: 'multi_attr_param3', value: true },
   ];
 
-  const onSave = (updated) => {
-    console.log('Updated data:', updated);
-    const dict = Object.fromEntries(updated.map(item => [item.key, item.value]));
-    Mapp.setAttributes(dict);
-  };
-  
   const [items, setItems] = useState(data);
 
   const handleValueChange = (text, index) => {
     const updated = [...items];
     updated[index].value = text;
     setItems(updated);
-  };
-
-  const handleSave = () => {
-    console.log('Saved data:', items);
-    if (onSave) onSave(items);
-  };
-
-  const handleGet = async () => {
-    let customAttributtes = await Mapp.getAttributes(["multi_attr_param1","multi_attr_param2","multi_attr_param3"]);
-    showDialog('Device info', JSON.stringify(customAttributtes));
   };
 
   const renderItem = ({ item, index }) => (
@@ -139,6 +123,7 @@ const setAttributes = async () => {
     multi_attr_param1: 'Lorem ipsum',
     multi_attr_param2: 1.0,
     multi_attr_param3: false,
+    multi_attr_param4: new Date().toISOString(),
   };
   const result = await Mapp.setAttributes(attributes);
   if (result) {
@@ -149,7 +134,7 @@ const setAttributes = async () => {
 };
 
 const getAttributes = async () => {
-  const keys = ["multi_attr_param1", "multi_attr_param2", "multi_attr_param3"];
+  const keys = ["multi_attr_param1", "multi_attr_param2", "multi_attr_param3", "multi_attr_param4"];
   const result = await Mapp.getAttributes(keys);
   if (result !== null) {
     showDialog('Success', JSON.stringify(result));
