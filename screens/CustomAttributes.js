@@ -92,23 +92,8 @@ export const CustomAttributes = ({route, navigation}) => {
           }}
           buttonTitle="Get attribute"
         />
-        <View style={styles.container}>
-        <Text style={styles.title}>Custom Attributes</Text>
-        <FlatList
-          data={items}
-          keyExtractor={(item) => item.key}
-          renderItem={renderItem}
-          scrollEnabled={false}
-          ItemSeparatorComponent={() => <View style={styles.separator} 
-          />}
-        />
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveText}>Send Custom Attributes</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={handleGet}>
-          <Text style={styles.saveText}>Get Custom Attributes</Text>
-        </TouchableOpacity>
-      </View>
+        <MappButton buttonTitle="Set attributes" buttonOnPress={()=>{setAttributes()}}/>
+        <MappButton buttonTitle="Get attributes" buttonOnPress={()=>{getAttributes()}}/>
       </ScrollView>
     </View>
   );
@@ -142,6 +127,26 @@ const getCustomAttribute = async key => {
     showDialog('Error', error);
   }
 };
+
+const setAttributes = async () => {
+  const attributes={"num":1, "FirstName":"Peter"};
+  const result=await Mapp.setAttributes(attributes);
+  if(result){
+    showDialog('Success', 'Attributes set successfully');
+  }else{
+    setDialog("Error", "Attributes couldn't be set");
+  }
+}
+
+const getAttributes = async () => {
+  const keys=["num", "FirstName"];
+  const result=await Mapp.getAttributes(keys);
+  if(result!==null){
+    showDialog('Success', result.toString());
+  }else{
+    setDialog("Error", "Can't get attributes");
+  }
+}
 
 const showDialog = (title, message) => {
   Alert.alert(title, message);

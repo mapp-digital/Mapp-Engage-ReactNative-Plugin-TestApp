@@ -1,8 +1,7 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Mapp} from 'react-native-mapp-plugin';
 
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -14,14 +13,12 @@ import {
 
 import Clipboard from '@react-native-clipboard/clipboard';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-
 import {
   MappSwitch,
   MappInputText,
   MappButton,
 } from '../components/MappComponents';
-import {InAppInboxScreen} from './InAppInbox';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export const HomeScreen = ({navigation}) => {
   const [isInitialized, setIsInitialized] = useState(false);
@@ -35,7 +32,7 @@ export const HomeScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? "#2b2b2bff" : "#fdfdfdff",
   };
 
   useEffect(() => {
@@ -62,7 +59,7 @@ export const HomeScreen = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaProvider style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -180,7 +177,7 @@ export const HomeScreen = ({navigation}) => {
             navigation.navigate('CustomAttributes', {
               title: 'Custom Attributes',
             });
-          }}></MappButton>
+          }}/>
         <MappButton
           buttonTitle={'Fetch Inbox messages'}
           buttonOnPress={() => {
@@ -202,7 +199,7 @@ export const HomeScreen = ({navigation}) => {
         <MappButton buttonTitle={'Get Tags'} buttonOnPress={getTags} />
         <MappButton buttonTitle={'Get Platform'} buttonOnPress={getPlatform} />
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -215,7 +212,7 @@ const getPlatform = () => {
 };
 
 const onInitCompletedListener = async () => {
-  if (Platform.OS == 'android') {
+  if (Platform.OS === 'android') {
     console.log('Attach onInitCompleteListener');
     let isInitialised = await Mapp.onInitCompletedListener();
     console.log('Is Initialized', isInitialised);
@@ -259,7 +256,7 @@ const getDeviceDmcInfo = async () => {
 
 const requestPostNotificationPermission = async () => {
   let result = await Mapp.requestPostNotificationPermission();
-  if (result == true) {
+  if (result === true) {
     console.log('PERMISSION GRANTED');
     Alert.alert('POST NOTIFICATION', 'Permission was granted!');
   } else {

@@ -1,32 +1,36 @@
 import * as React from 'react';
-import {Mapp} from 'react-native-mapp-plugin';
+import { Mapp } from 'react-native-mapp-plugin';
 import {
   StyleSheet,
   useColorScheme,
   Alert,
   Platform,
   ToastAndroid,
+  StatusBar,
 } from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {HomeScreen} from './screens/Home';
-import {InAppInboxScreen} from './screens/InAppInbox';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {CustomAttributes} from './screens/CustomAttributes';
+import {
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
+
+import { HomeScreen } from './screens/Home';
+import { InAppInboxScreen } from './screens/InAppInbox';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { CustomAttributes } from './screens/CustomAttributes';
 
 const Stack = createNativeStackNavigator();
 
-Mapp.engage('194836e00ab678.39583584', '', 'TEST', '301677', '33');
+Mapp.engage('5ab29034936a84.32826188', '', 'EMC', '106320', '22190');
+//Mapp.engage('183408d0cd3632.83592719', '', 'L3', '206974', '5963');
 //Mapp.engage('1929048fafa670.91503749', '', 'L3', '207182', '5963');
+
+// Enable to show notifications when app is in foreground
+// It has only effect on iOS
 Mapp.setShowNotificationsAtForeground(true);
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   // register listener for push actions - received, opened, dismissed...
   // Mapp.addPushListener(notification => {
@@ -47,7 +51,7 @@ const App = () => {
     }, 500);
   });
 
-  if (Platform.OS == 'android') {
+  if (Platform.OS === 'android') {
     Mapp.requestPostNotificationPermission(result => {
       ToastAndroid.show(
         'POST NOTIFICATIONS PERMISSION: ' +
@@ -58,6 +62,15 @@ const App = () => {
   }
 
   return (
+    <SafeAreaProvider>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppContent />
+    </SafeAreaProvider>
+  );
+};
+
+function AppContent() {
+  return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
@@ -67,6 +80,12 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
