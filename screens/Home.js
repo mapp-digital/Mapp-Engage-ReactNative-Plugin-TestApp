@@ -92,6 +92,28 @@ export const HomeScreen = ({navigation}) => {
           }}
         />
         <MappInputText
+          onValueChanged={value => setAliasState(value)}
+          textValue={aliasState}
+          hintValue={'Enter custom alias and force sendout of custom attributes'}
+          buttonTitle={'Set'}
+          onClick={value => {
+            console.log('New alias: ', value);
+            setAliasAndResend(value);
+            setAliasState('');
+          }}
+        />
+        <MappInputText
+          onValueChanged={value => setAliasState(value)}
+          textValue={aliasState}
+          hintValue={'Enter custom alias and do not force sendout of custom attributes'}
+          buttonTitle={'Set'}
+          onClick={value => {
+            console.log('New alias: ', value);
+            setAliasAndNotResend(value);
+            setAliasState('');
+          }}
+        />
+        <MappInputText
           onValueChanged={value => setTokenState(value)}
           textValue={tokenState}
           hintValue={'Set token'}
@@ -245,6 +267,14 @@ const requestPostNotificationPermission = async () => {
 
 const setAlias = async alias => {
   Mapp.setAlias(alias);
+};
+
+const setAliasAndResend = async alias => {
+  Mapp.setAlias(alias, true);
+};
+
+const setAliasAndNotResend = async alias => {
+  Mapp.setAlias(alias, false);
 };
 
 const getPushStatus = async () => {
