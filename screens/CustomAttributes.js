@@ -1,24 +1,24 @@
-import {Mapp} from 'react-native-mapp-plugin';
-import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StyleSheet, Text, Alert} from 'react-native';
+import { Mapp } from 'react-native-mapp-plugin';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, StyleSheet, Text, Alert } from 'react-native';
 import {
   MappInputText,
   MappButton,
   MappSwitch,
 } from '../components/MappComponents';
 
-export const CustomAttributes = ({route, navigation}) => {
+export const CustomAttributes = ({ route, navigation }) => {
   const title = route.params.title;
   const [customAttributeKey, setCustomAttributeKey] = useState('');
   const [customAttributeValue, setCustomAttributeValue] = useState('');
   const [getAttributeKey, setGetAttributeKey] = useState('');
 
   useEffect(() => {
-    navigation.setOptions({title: title});
+    navigation.setOptions({ title: title });
   }, []);
 
   return (
-    <View style={{marginHorizontal: 10}}>
+    <View style={{ marginHorizontal: 10 }}>
       <ScrollView>
         <Text style={styles.headerStyle}>Set Custom Attribute</Text>
         <MappInputText
@@ -48,8 +48,18 @@ export const CustomAttributes = ({route, navigation}) => {
           }}
           buttonTitle="Get attribute"
         />
-        <MappButton buttonTitle="Set attributes" buttonOnPress={()=>{setAttributes()}}/>
-        <MappButton buttonTitle="Get attributes" buttonOnPress={()=>{getAttributes()}}/>
+        <MappButton
+          buttonTitle="Set attributes"
+          buttonOnPress={() => {
+            setAttributes();
+          }}
+        />
+        <MappButton
+          buttonTitle="Get attributes"
+          buttonOnPress={() => {
+            getAttributes();
+          }}
+        />
       </ScrollView>
     </View>
   );
@@ -85,24 +95,28 @@ const getCustomAttribute = async key => {
 };
 
 const setAttributes = async () => {
-  const attributes={"num":1, "FirstName":"Peter"};
-  const result=await Mapp.setAttributes(attributes);
-  if(result){
+  const attributes = {
+    multi_attr_param1: 'Lorem ipsum',
+    multi_attr_param2: 1.0,
+    multi_attr_param3: false,
+  };
+  const result = await Mapp.setAttributes(attributes);
+  if (result) {
     showDialog('Success', 'Attributes set successfully');
-  }else{
-    setDialog("Error", "Attributes couldn't be set");
+  } else {
+    setDialog('Error', "Attributes couldn't be set");
   }
-}
+};
 
 const getAttributes = async () => {
-  const keys=["num", "FirstName"];
-  const result=await Mapp.getAttributes(keys);
-  if(result!==null){
-    showDialog('Success', result.toString());
-  }else{
-    setDialog("Error", "Can't get attributes");
+  const keys = ["multi_attr_param1", "multi_attr_param2", "multi_attr_param3"];
+  const result = await Mapp.getAttributes(keys);
+  if (result !== null) {
+    showDialog('Success', JSON.stringify(result));
+  } else {
+    setDialog('Error', "Can't get attributes");
   }
-}
+};
 
 const showDialog = (title, message) => {
   Alert.alert(title, message);
