@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {Mapp} from 'react-native-mapp-plugin';
+import { useEffect, useState } from 'react';
+import { Mapp } from 'react-native-mapp-plugin';
 
 import {
   ScrollView,
@@ -9,6 +9,7 @@ import {
   View,
   Alert,
   Platform,
+  TextInput,
 } from 'react-native';
 
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -20,7 +21,7 @@ import {
 } from '../components/MappComponents';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-export const HomeScreen = ({navigation}) => {
+export const HomeScreen = ({ navigation }) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const [isReady, setIsReady] = useState(false);
@@ -32,7 +33,7 @@ export const HomeScreen = ({navigation}) => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? "#2b2b2bff" : "#fdfdfdff",
+    backgroundColor: isDarkMode ? '#2b2b2bff' : '#fdfdfdff',
   };
 
   useEffect(() => {
@@ -66,7 +67,8 @@ export const HomeScreen = ({navigation}) => {
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={styles.sectionContainer}>
+        style={styles.sectionContainer}
+      >
         <MappButton buttonTitle={'Logout'} buttonOnPress={logOut} />
         <View
           style={{
@@ -76,55 +78,40 @@ export const HomeScreen = ({navigation}) => {
             borderColor: '#ff7a33',
             padding: 5,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <MappSwitch text={'SDK Ready'} isChecked={isReady} />
           <MappSwitch text={'Registered'} isChecked={isRegistered} />
         </View>
-        <MappInputText
-          onValueChanged={value => setAliasState(value)}
-          textValue={aliasState}
-          hintValue={'Enter custom alias'}
-          buttonTitle={'Set'}
-          onClick={value => {
-            console.log('New alias: ', value);
-            setAlias(value);
-            setAliasState('');
-          }}
-        />
-        <MappInputText
-          onValueChanged={value => setAliasState(value)}
-          textValue={aliasState}
-          hintValue={'Enter custom alias and force sendout of custom attributes'}
-          buttonTitle={'Set'}
-          onClick={value => {
-            console.log('New alias: ', value);
-            setAliasAndResend(value);
-            setAliasState('');
-          }}
-        />
-        <MappInputText
-          onValueChanged={value => setAliasState(value)}
-          textValue={aliasState}
-          hintValue={'Enter custom alias and do not force sendout of custom attributes'}
-          buttonTitle={'Set'}
-          onClick={value => {
-            console.log('New alias: ', value);
-            setAliasAndNotResend(value);
-            setAliasState('');
-          }}
-        />
-        <MappInputText
-          onValueChanged={value => setTokenState(value)}
-          textValue={tokenState}
-          hintValue={'Set token'}
-          buttonTitle={'Set'}
-          onClick={value => {
-            console.log('New token: ', value);
-            setToken(value);
-            setTokenState('');
-          }}
-        />
-        <View style={{marginBottom: 15}} />
+        <View style={styles.sectionContainer}>
+          <TextInput
+            placeholder="Enter custom alias"
+            style={styles.inputTextStyle}
+            value={aliasState}
+            onChangeText={value => setAliasState(value)}
+          />
+          <MappButton
+            buttonTitle="Set alias - no resend attributes"
+            buttonOnPress={async () => {
+              const result = await setAlias(aliasState, false);
+              console.log('Set alias result', result);
+              if (result) {
+                setAliasState('');
+              }
+            }}
+          />
+          <MappButton
+            buttonTitle="Set alias - resend attributes"
+            buttonOnPress={async () => {
+              const result = await setAlias(aliasState, false);
+              if (result) {
+                setAliasState('');
+              }
+            }}
+          />
+        </View>
+
+        <View style={{ marginBottom: 15 }} />
         <MappButton buttonTitle={'Get Alias'} buttonOnPress={getAlias} />
         <MappButton buttonTitle={'Get Token'} buttonOnPress={getToken} />
         <MappButton
@@ -150,7 +137,8 @@ export const HomeScreen = ({navigation}) => {
             borderColor: '#ff7a33',
             padding: 5,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <MappSwitch
             text={'Push enabled'}
             isChecked={isPushEnabled}
@@ -177,7 +165,8 @@ export const HomeScreen = ({navigation}) => {
             navigation.navigate('CustomAttributes', {
               title: 'Custom Attributes',
             });
-          }}/>
+          }}
+        />
         <MappButton
           buttonTitle={'Fetch Inbox messages'}
           buttonOnPress={() => {
@@ -265,16 +254,12 @@ const requestPostNotificationPermission = async () => {
   }
 };
 
-const setAlias = async alias => {
-  Mapp.setAlias(alias);
-};
-
-const setAliasAndResend = async alias => {
-  Mapp.setAlias(alias, true);
-};
-
-const setAliasAndNotResend = async alias => {
-  Mapp.setAlias(alias, false);
+const setAlias = async (alias, resend) => {
+  if (alias === null || alias.trim() === '') {
+    showDialog('Set Alias', 'Alias cannot be empty');
+    return;
+  }
+  return await Mapp.setAlias(alias, resend);
 };
 
 const getPushStatus = async () => {
@@ -447,6 +432,14 @@ const logOut = () => {
 };
 
 const styles = StyleSheet.create({
+  inputTextStyle: {
+    flexDirection: 'row',
+    borderColor: '#cccccc',
+    borderWidth: 1,
+    borderRadius: 10,
+    marginVertical: 5,
+    padding: 15,
+  },
   sectionContainer: {
     marginTop: 10,
     paddingHorizontal: 10,
