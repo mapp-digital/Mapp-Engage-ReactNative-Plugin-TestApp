@@ -1,13 +1,27 @@
-import {View, Switch, Text} from 'react-native';
-export const MappSwitch = ({text, isChecked, onCheckedChanged, isEnabled}) => {
+import { View, Switch, Text, StyleSheet } from 'react-native';
+export const MappSwitch = ({
+  text,
+  isChecked,
+  onCheckedChanged,
+  isEnabled,
+}) => {
   return (
-    <View style={{flexDirection: 'row'}}>
-      <Text style={{flex: 1, textAlignVertical:"center"}}>{text}</Text>
+    <View style={styles.container}>
+      <Text style={styles.switch}>{text}</Text>
       <Switch
         value={isChecked}
         onValueChange={onCheckedChanged}
-        disabled={isEnabled==true || isEnabled==undefined ? true : false}
+        disabled={isEnabled === true || isEnabled === undefined ? true : false}
       />
     </View>
   );
 };
+
+const styles=StyleSheet.create({
+  container: { flexDirection: 'row' },
+
+  switch: {
+    flex: 1,
+    textAlignVertical: 'center',
+  },
+});
