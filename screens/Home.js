@@ -40,7 +40,23 @@ export const HomeScreen = ({ navigation }) => {
     //this.setState({isInitialised: initialized});
     // request permission to post notification for Android 13+
     //requestPostNotificationPermission();
+    const fetchPushStatus = async () => {
+      try {
+        const enabled = await Mapp.isPushEnabled(); // await the native call
+        setIsPushEnabled(enabled); // set state
+        const ready = await Mapp.isReady();
+        setIsReady(ready);
+
+        const alias = await Mapp.getAlias();
+        setIsRegistered(alias !== null);
+      } catch (error) {
+        console.error('Failed to get push status', error);
+      }
+    };
     onInitListener();
+    if(Platform.OS === 'ios') {
+      fetchPushStatus();
+    }
   }, []);
 
   const onInitListener = async () => {
@@ -131,13 +147,7 @@ export const HomeScreen = ({ navigation }) => {
           buttonOnPress={getPushStatus}
         />
         <View
-          style={{
-            marginVertical: 10,
-            borderWidth: 1,
-            borderColor: '#ff7a33',
-            padding: 5,
-            borderRadius: 5,
-          }}
+          style={styles.card}
         >
           <MappSwitch
             text={'Push enabled'}
@@ -432,6 +442,18 @@ const logOut = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',        // vertically centers the text and switch
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  label: {
+    flex: 1,
+    fontSize: 16,
+    color: '#000',
+  },
   inputTextStyle: {
     flexDirection: 'row',
     borderColor: '#cccccc',
