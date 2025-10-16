@@ -54,7 +54,7 @@ export const HomeScreen = ({ navigation }) => {
       }
     };
     onInitListener();
-    if(Platform.OS === 'ios') {
+    if (Platform.OS === 'ios') {
       fetchPushStatus();
     }
   }, []);
@@ -109,7 +109,7 @@ export const HomeScreen = ({ navigation }) => {
           <MappButton
             buttonTitle="Set alias - no resend attributes"
             buttonOnPress={async () => {
-              const result = await setAlias(aliasState, false);
+              const result = await setAlias(aliasState);
               console.log('Set alias result', result);
               if (result) {
                 setAliasState('');
@@ -117,9 +117,19 @@ export const HomeScreen = ({ navigation }) => {
             }}
           />
           <MappButton
-            buttonTitle="Set alias - resend attributes"
+            buttonTitle="Set alias - witch resend FALSE"
             buttonOnPress={async () => {
-              const result = await setAlias(aliasState, false);
+              const result = await setAliasWithResend(aliasState, false);
+              console.log('Set alias result', result);
+              if (result) {
+                setAliasState('');
+              }
+            }}
+          />
+          <MappButton
+            buttonTitle="Set alias - with resend TRUE"
+            buttonOnPress={async () => {
+              const result = await setAliasWithResend(aliasState, true);
               if (result) {
                 setAliasState('');
               }
@@ -146,9 +156,7 @@ export const HomeScreen = ({ navigation }) => {
           buttonTitle={'Check push status'}
           buttonOnPress={getPushStatus}
         />
-        <View
-          style={styles.card}
-        >
+        <View style={styles.card}>
           <MappSwitch
             text={'Push enabled'}
             isChecked={isPushEnabled}
@@ -264,12 +272,20 @@ const requestPostNotificationPermission = async () => {
   }
 };
 
-const setAlias = async (alias, resend) => {
+const setAliasWithResend = async (alias, resend) => {
   if (alias === null || alias.trim() === '') {
     showDialog('Set Alias', 'Alias cannot be empty');
     return;
   }
   return await Mapp.setAlias(alias, resend);
+};
+
+const setAlias = async alias => {
+  if (alias === null || alias.trim() === '') {
+    showDialog('Set Alias', 'Alias cannot be empty');
+    return;
+  }
+  return await Mapp.setAlias(alias);
 };
 
 const getPushStatus = async () => {
@@ -444,7 +460,7 @@ const logOut = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',        // vertically centers the text and switch
+    alignItems: 'center', // vertically centers the text and switch
     justifyContent: 'space-between',
     paddingHorizontal: 12,
     paddingVertical: 8,

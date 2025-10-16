@@ -17,7 +17,7 @@
     "jest-message-util": "^30.0.0",
     "react": "19.1.0",
     "react-native": "0.81.4",
-    "react-native-mapp-plugin": "file:../Mapp-Engage-ReactNative-Plugin/react-native-mapp-plugin-1.4.0.tgz",
+    "react-native-mapp-plugin": "file:../Mapp-Engage-ReactNative-Plugin/react-native-mapp-plugin-1.3.2-beta.01.tgz",
     "react-native-safe-area-context": "5.5.2",
     "react-native-screens": "^4.16.0"
   },
