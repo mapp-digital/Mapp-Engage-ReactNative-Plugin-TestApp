@@ -117,7 +117,7 @@ export const HomeScreen = ({ navigation }) => {
             }}
           />
           <MappButton
-            buttonTitle="Set alias - witch resend FALSE"
+            buttonTitle="Set alias - with resend FALSE"
             buttonOnPress={async () => {
               const result = await setAliasWithResend(aliasState, false);
               console.log('Set alias result', result);
